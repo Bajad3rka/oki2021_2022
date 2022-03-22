@@ -1,2 +1,7 @@
-# oki2021_2022
-[alo.txt](https://github.com/Bajad3rka/oki2021_2022/files/8326958/alo.txt)
+# Projekty OKI 2021/2022
+
+###### Program numer 23 - Analizator logow - map
+
+w tym programie
+* funkcja map
+
