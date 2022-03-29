@@ -2,11 +2,12 @@
 class implementing queue in C++
 the same functionality as STL (Standard Template Library) class queue in C++
 with usage example
-version 1.2
+version 1.3
 Consists
 a. program template
 b. definition of class mqueue
 c. constructor
+d. empty() method
 Author: Bajadera / WB
 */
 #include <iostream>
@@ -18,10 +19,17 @@ class mqueue
 	public:
 	mqueue() //Constructor
 	{
-		cout << "Jestem 1\n";
+		
 		first = last = -1;
-		cout<< "Jestem 2\n";
+		
 	}
+	bool empty()
+	{
+		if (first == -1)
+			return true;
+		return false;
+	}
+	
 	private:
 	vector<int> elements;
 	int first, last;
@@ -29,6 +37,6 @@ class mqueue
 int main() 
 {
 	mqueue payments;
-	mqueue payments2;
+	cout<< "empty?:" << payments.empty() << "\n";
 	return 0;
 }
