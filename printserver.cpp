@@ -1,13 +1,18 @@
 /*
 //Class implementing print server in C++
-//Version 1.3
+//Solution of task https://szkopul.edu.pl/problemset/problem/swy/site/
+//Version 2.0 FULL
 Consists
-a. Program template 
+a. Program template
 b. switch/case
-c. d request (adding task)
-d. g request (printer ready)
-What is OKI? https://youtu.be/5sM88CcBGd4
+c. Servicing d request (adding task)
+d. Servicing g request (printer ready)
+e. Servicing s request (stats)
+f. corrected d / waiting time
+-
+
 */
+ 
 #include <iostream>
 #include <vector>
 #include <algorithm> 
@@ -49,7 +54,7 @@ public:
    if ( first == last) {
       value = elements[first];
       first = last = -1;
-	   elements.clear();
+      elements.clear();
 	  return value;
    }
    value = elements[first];
@@ -71,6 +76,8 @@ int main() {
 
  cin >> number_of_requests; //9
 
+ average_print_time = -1;
+ total_print_time = number_of_so_far_prints = 0;
  longest_print = longest_queue = 0;
  for (i=1; i<=number_of_requests; ++i) {
     cin >> request; //s,  d,  g
@@ -79,8 +86,12 @@ int main() {
           cin >> time;
           printer.push(time);
           longest_queue = max(longest_queue, printer.size());
-          expected_time = -1; 
-     	  cout << "Request accepted. You are number " << printer.size() << " in queue, ";
+       	  if (average_print_time == -1)
+       	     expected_time = -1;
+		  else
+		     expected_time = printer.size() * average_print_time;
+       	  longest_queue = max ( longest_queue, printer.size()) ;
+       	  cout << "Request accepted. You are number " << printer.size() << " in queue, ";
      	  cout << " expected time is " <<  expected_time << " seconds. \n";
 		  break;	
        case 'g':
@@ -98,7 +109,8 @@ int main() {
      	  cout << "Printer is ready. Print time: " << print_time << " seconds.\n";	
 		  break;	
        case 's':
-     	  cout << "Request s\n";
+          cout << "Stats: Longest queue: " << longest_queue << ", longest waiting time: ";
+          cout << longest_print << " seconds.\n";	
 		  break;	
 	}
  }
