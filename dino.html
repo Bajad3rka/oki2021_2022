@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <!--
-Gra Dino v1.3 OKI
+Gra Dino v1.4 OKI
 Kod / omowienie 
 Wersje:
 1.0 - Strona www z tekstem 
 1.1 - plotno
 1.2 - ziemnia
 1.3 - funkcje
+1.4 - ubogi kaktus (prostokat)
 -->
 <head>
 </head>
 <body style="background-color: black; color: #AA80FF">
 
 <div> <!-- po prostu sekcja tekstu -->
-<strong> Gra dino v1.3 by Bajadera</strong><br>
+<strong> Gra dino v1.4 by Bajadera</strong><br>
 Dino idzie przez pustynie.
 </div>
 
@@ -37,8 +38,15 @@ function RysujZiemie()
 	rysowanie.fillStyle = "black";
 	rysowanie.fillRect(0,170,600,5);
 }
+<!-- ubogi kaktus -->
+function RysujKaktus(x)
+{
+	rysowanie.fillStyle = "#99FFAA";
+	rysowanie.fillRect(x,140,10,30);
+}
 RysujPlansze();
 RysujZiemie();
+RysujKaktus(550);
 </script>
 </body>
 </html>
