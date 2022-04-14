@@ -8,7 +8,21 @@ Wersje:
 <head>
 </head>
 <body style="background-color: black; color: #AA80FF">
+
+<div> <!-- po prostu sekcja tekstu -->
 <strong> Gra dino v1.0 by Bajadera</strong><br>
 Dino idzie przez pustynie.
+</div>
+
+<canvas id="plansza_canvas" width="600px" height="200px"></canvas>
+
+<script>
+<!-- kolorujemy plotno -->
+let plansza, rysowanie;
+plansza = document.getElementById("plansza_canvas");
+rysowanie = plansza.getContext("2d");
+rysowanie.fillStyle = "#AA80FF";
+rysowanie.fillRect(0,0,600,200);
+</script>
 </body>
 </html>
