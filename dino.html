@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <!--
-Gra Dino v1.2 OKI
+Gra Dino v1.3 OKI
 Kod / omowienie 
 Wersje:
 1.0 - Strona www z tekstem 
 1.1 - plotno
 1.2 - ziemnia
+1.3 - funkcje
 -->
 <head>
 </head>
 <body style="background-color: black; color: #AA80FF">
 
 <div> <!-- po prostu sekcja tekstu -->
-<strong> Gra dino v1.2 by Bajadera</strong><br>
+<strong> Gra dino v1.3 by Bajadera</strong><br>
 Dino idzie przez pustynie.
 </div>
 
@@ -23,13 +24,21 @@ Dino idzie przez pustynie.
 let plansza, rysowanie;
 plansza = document.getElementById("plansza_canvas");
 rysowanie = plansza.getContext("2d");
-rysowanie.fillStyle = "#AA80FF";
-rysowanie.fillRect(0,0,600,200);
 
+function RysujPlansze()
+{
+	rysowanie.fillStyle = "#AA80FF";
+	<!--               x y  sz  dl -->
+	rysowanie.fillRect(0,0,600,200);
+}
 <!-- ziemia -->
-rysowanie.fillStyle = "black";
-rysowanie.fillRect(0,170,600,5);
-
+function RysujZiemie()
+{
+	rysowanie.fillStyle = "black";
+	rysowanie.fillRect(0,170,600,5);
+}
+RysujPlansze();
+RysujZiemie();
 </script>
 </body>
 </html>
