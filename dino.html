@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-Gra Dino v2.3 OKI
+Gra Dino v2.4 OKI
 Kod / omowienie 
 Wersje:
 1.0 - Strona www z tekstem 
@@ -13,14 +13,15 @@ Wersje:
 2.1 - klasa_kaktus
 2.2 - klasa_dino
 2.3 - idzie do gory chlopak ale tylko na strzalke :( no i na g tymczasowo 
+2.4 - dino skacze
 -->
 <head>
 </head>
 <body style="background-color: black; color: #AA80FF">
 
 <div> <!-- po prostu sekcja tekstu -->
-<strong> Gra dino v2.3 by Bajadera</strong><br>
-Dino idzie przez pustynie.
+<strong> Gra dino v2.4 by Bajadera</strong><br>
+Dino skacze przez pustynie.
 </div>
 
 <canvas id="plansza_canvas" width="600px" height="200px"></canvas>
@@ -70,6 +71,7 @@ class klasa_dino
 		this.dino_szerokosc_x = 30;
 		this.dino_wysokosc_y = 50;
 		this.czy_dino_skacze = false;
+		this.grawitacja = 0.1;
 	}
 	RysujDino()
 	{
@@ -78,6 +80,11 @@ class klasa_dino
 		if(this.czy_dino_skacze == true)
 		{
 			this.dino_y = this.dino_y - this.predkosc;
+			this.predkosc = this.predkosc - this.grawitacja;
+		}
+		if (this.dino_y + this.dino_wysokosc_y >= 170)
+		{
+			this.UstawDino();
 		}
 	}
 	DinoSkacz()
@@ -85,7 +92,7 @@ class klasa_dino
 		if ( this.czy_dino_skacze == false ) 
 		{
 			this.czy_dino_skacze = true;
-			this.predkosc = 1;
+			this.predkosc = 4;
 		}
 	}
 }
