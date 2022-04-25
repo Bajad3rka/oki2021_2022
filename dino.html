@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-Gra Dino v2.1 OKI
+Gra Dino v2.2 OKI
 Kod / omowienie 
 Wersje:
 1.0 - Strona www z tekstem 
@@ -11,13 +11,14 @@ Wersje:
 1.5 - ANIMACJA
 2.0 - poprawki
 2.1 - klasa_kaktus
+2.2 - klasa_dino
 -->
 <head>
 </head>
 <body style="background-color: black; color: #AA80FF">
 
 <div> <!-- po prostu sekcja tekstu -->
-<strong> Gra dino v2.1 by Bajadera</strong><br>
+<strong> Gra dino v2.2 by Bajadera</strong><br>
 Dino idzie przez pustynie.
 </div>
 
@@ -47,7 +48,7 @@ class klasa_kaktus
 	<!-- ubogi kaktus -->
 	RysujKaktus()
 	{
-	rysowanie.fillStyle = "#99FFAA";
+	rysowanie.fillStyle = "#4BC37B";
 	rysowanie.fillRect(this.kaktus_x,this.kaktus_y,this.kaktus_szerokosc_x,this.kaktus_wysokosc_y);
 	this.kaktus_x = this.kaktus_x - this.kaktus_predkosc_x;
 	if (this.kaktus_x <0)
@@ -55,10 +56,29 @@ class klasa_kaktus
 	}
 	
 }
+class klasa_dino
+{
+	constructor()
+	{
+	this.UstawDino();
+	}
+	UstawDino()
+	{
+		this.dino_x = 60;
+		this.dino_y = 120;
+		this.dino_szerokosc_x = 30;
+		this.dino_wysokosc_y = 50;
+	}
+	RysujDino()
+	{
+		rysowanie.fillStyle = "#6B89DB";
+		rysowanie.fillRect(this.dino_x, this.dino_y, this.dino_szerokosc_x, this.dino_wysokosc_y);
+	}
+}
 
 function RysujPlansze()
 {
-	rysowanie.fillStyle = "#AA80FF";
+	rysowanie.fillStyle = "#E8CBF3";
 	<!--               x y  sz  dl -->
 	rysowanie.fillRect(0,0,plansza.width,plansza.height);
 }
@@ -74,10 +94,12 @@ function Gra()
 {
 	RysujPlansze();
 	RysujZiemie();
-	kaktus1.RysujKaktus();	
+	kaktus1.RysujKaktus();
+	dino.RysujDino();
 }
-let kaktus1;
+let kaktus1, dino;
 kaktus1 = new klasa_kaktus();
+dino = new klasa_dino();
 setInterval(Gra, 10); <!-- 100 razy na sekunde-co 10ms -->
 </script>
 </body>
