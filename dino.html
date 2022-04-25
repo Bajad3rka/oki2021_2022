@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-Gra Dino v2.2 OKI
+Gra Dino v2.3 OKI
 Kod / omowienie 
 Wersje:
 1.0 - Strona www z tekstem 
@@ -12,13 +12,14 @@ Wersje:
 2.0 - poprawki
 2.1 - klasa_kaktus
 2.2 - klasa_dino
+2.3 - idzie do gory chlopak ale tylko na strzalke :(
 -->
 <head>
 </head>
 <body style="background-color: black; color: #AA80FF">
 
 <div> <!-- po prostu sekcja tekstu -->
-<strong> Gra dino v2.2 by Bajadera</strong><br>
+<strong> Gra dino v2.3 by Bajadera</strong><br>
 Dino idzie przez pustynie.
 </div>
 
@@ -68,11 +69,24 @@ class klasa_dino
 		this.dino_y = 120;
 		this.dino_szerokosc_x = 30;
 		this.dino_wysokosc_y = 50;
+		this.czy_dino_skacze = false;
 	}
 	RysujDino()
 	{
 		rysowanie.fillStyle = "#6B89DB";
 		rysowanie.fillRect(this.dino_x, this.dino_y, this.dino_szerokosc_x, this.dino_wysokosc_y);
+		if(this.czy_dino_skacze == true)
+		{
+			this.dino_y = this.dino_y - this.predkosc;
+		}
+	}
+	DinoSkacz()
+	{
+		if ( this.czy_dino_skacze == false ) 
+		{
+			this.czy_dino_skacze = true;
+			this.predkosc = 1;
+		}
 	}
 }
 
@@ -97,6 +111,15 @@ function Gra()
 	kaktus1.RysujKaktus();
 	dino.RysujDino();
 }
+function UstawWcisnietyKlawisz(zdarzenie)
+{ <!-- jak dac to cholerstwo pod spacje!?!?!?!? -->
+	if <!--( (zdarzenie.key=='space' || --> 
+	(zdarzenie.key=='ArrowUp') <!-- ) -->
+	{
+		dino.DinoSkacz();
+	}
+}
+document.addEventListener("keydown", UstawWcisnietyKlawisz, false);
 let kaktus1, dino;
 kaktus1 = new klasa_kaktus();
 dino = new klasa_dino();
