@@ -12,7 +12,7 @@ Wersje:
 2.0 - poprawki
 2.1 - klasa_kaktus
 2.2 - klasa_dino
-2.3 - idzie do gory chlopak ale tylko na strzalke :(
+2.3 - idzie do gory chlopak ale tylko na strzalke :( no i na g tymczasowo 
 -->
 <head>
 </head>
@@ -114,7 +114,7 @@ function Gra()
 function UstawWcisnietyKlawisz(zdarzenie)
 { <!-- jak dac to cholerstwo pod spacje!?!?!?!? -->
 	if <!--( (zdarzenie.key=='space' || --> 
-	(zdarzenie.key=='ArrowUp') <!-- ) -->
+	((zdarzenie.key=='ArrowUp')||(zdarzenie.key=='g'))<!--tymczasowo bo spacja nie oddaje--> <!-- ) -->
 	{
 		dino.DinoSkacz();
 	}
