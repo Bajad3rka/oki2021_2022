@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-Gra Dino v3.0 OKI
+Gra Dino v3.1 OKI
 Kod / omowienie 
 Wersje:
 1.0 - Strona www z tekstem 
@@ -15,22 +15,28 @@ Wersje:
 2.3 - idzie do gory chlopak 
 2.4 - dino skacze
 3.0 - wynik i liczba zyc 
+3.1 - przycisk start
 -->
 <head>
 </head>
 <body style="background-color: black; color: #FF0000">
 
 <div> <!-- po prostu sekcja tekstu -->
-<strong> Gra dino v3.0 by Bajadera</strong><br>
-Dino skacze przez pustynie.
+<strong> Gra dino v3.1 by Bajadera</strong><br>
+Niech Dino nie cierpi!
 </div>
-
+<div id="baner_start">
+<h1>Nacisnij START</h1></div>
 <canvas id="plansza_canvas" width="600px" height="200px"></canvas>
+
+<div>
+<button id = "przycisk_start" onclick = "StartGry()">
+START</button></div>
 <div id="napis_wynik">
-Graczu! Niech Dino nie cierpi!
+Wynik: 0
 </div>
 <div id="napis_liczba_zyc">
-Skacz dobrze
+Liczba zyc: 3
 </div>
 <script>
 
@@ -120,7 +126,9 @@ function AktualizujWynik()
 {
 	++liczba_klatek;
 	if ((liczba_klatek%10) == 0 )
-	++wynik_gracz;
+	{
+		++wynik_gracz;
+	}
 	document.getElementById("napis_wynik").innerHTML = "Wynik: <strong>" + liczba_klatek + "</strong>";
 	document.getElementById("napis_liczba_zyc").innerHTML = "Skacz dobrze.. <strong>" + liczba_zyc + "</strong>";
 }
@@ -143,6 +151,7 @@ function UstawWcisnietyKlawisz(zdarzenie)
 document.addEventListener("keydown", UstawWcisnietyKlawisz, false);
 let kaktus1, dino;
 let liczba_klatek, wynik_gracz, liczba_zyc;
+let uchwyt_animacji;
 
 liczba_klatek = wynik_gracz = 0;
 liczba_zyc = 3;
@@ -150,7 +159,17 @@ liczba_zyc = 3;
 kaktus1 = new klasa_kaktus();
 dino = new klasa_dino();
 
-setInterval(Gra, 10); <!-- 100 razy na sekunde-co 10ms -->
+function StartGry()
+{
+	document.getElementById("przycisk_start").blur();
+	document.getElementById("baner_start").innerHTML = "<h1> Uwazaj prosze na Dino...</h1>";
+	liczba_klatek = wynik_gracza = 0;
+	liczba_zyc = 3;
+	dino.UstawDino();
+	kaktus1.UstawKaktus();
+	clearInterval(uchwyt_animacji);
+	uchwyt_animacji=setInterval(Gra, 10);
+}
 </script>
 </body>
 </html>
