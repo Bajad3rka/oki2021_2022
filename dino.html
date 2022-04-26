@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-Gra Dino v3.1 OKI
+Gra Dino v3.3 OKI
 Kod / omowienie 
 Wersje:
 1.0 - Strona www z tekstem 
@@ -16,13 +16,15 @@ Wersje:
 2.4 - dino skacze
 3.0 - wynik i liczba zyc 
 3.1 - przycisk start
+3.2 - kolizja
+3.3 - dwoch enemy
 -->
 <head>
 </head>
 <body style="background-color: black; color: #FF0000">
 
 <div> <!-- po prostu sekcja tekstu -->
-<strong> Gra dino v3.1 by Bajadera</strong><br>
+<strong> Gra dino v3.3 by Bajadera</strong><br>
 Niech Dino nie cierpi!
 </div>
 <div id="baner_start">
@@ -33,10 +35,10 @@ Niech Dino nie cierpi!
 <button id = "przycisk_start" onclick = "StartGry()">
 START</button></div>
 <div id="napis_wynik">
-Wynik: 0
+Wynik: <strong> 0 </strong>
 </div>
 <div id="napis_liczba_zyc">
-Liczba zyc: 3
+Liczba zyc:<strong> 3 </strong>
 </div>
 <script>
 
@@ -52,22 +54,64 @@ class klasa_kaktus
 	}
 	UstawKaktus()
 	{<!-- ustawia kaktus -->
-		this.kaktus_x = plansza.width - 40;
-		this.kaktus_y = 150;
-		this.kaktus_szerokosc_x = 10;
-		this.kaktus_wysokosc_y = 20;
+		this.kaktus_x = plansza.width + 40; 
+		this.kaktus_y = 150; 
+		this.kaktus_szerokosc_x = 10; 
+		this.kaktus_wysokosc_y = 20; 
 		this.kaktus_predkosc_x = 1;
+		this.kolor = "#0B0B0B";
 		
 	}
 	<!-- ubogi kaktus -->
 	RysujKaktus()
 	{
-	rysowanie.fillStyle = "#4BC37B";
-	rysowanie.fillRect(this.kaktus_x,this.kaktus_y,this.kaktus_szerokosc_x,this.kaktus_wysokosc_y);
+	rysowanie.fillStyle = this.kolor;
+	<!--rysowanie.fillRect(this.kaktus_x,this.kaktus_y,this.kaktus_szerokosc_x,this.kaktus_wysokosc_y);--><!--to rysuje prostokat-->
+	 rysowanie.drawImage(this.img, this.kaktus_x,this.kaktus_y, this.kaktus_szerokosc_x,this.kaktus_wysokosc_y);
 	this.kaktus_x = this.kaktus_x - this.kaktus_predkosc_x;
-	if (this.kaktus_x <0)
-		this.UstawKaktus();
+	
 	}
+	<!-- sprawdzamy brak kolizji-->
+	   CzyKolizja() { 
+      if ( dino.ZwrocPrawy_X() < this.ZwrocLewy_X() ){
+         return false; }
+      if ( dino.ZwrocLewy_X() > this.ZwrocPrawy_X() ){
+         return false; }
+      if ( dino.ZwrocDolny_Y() < this.ZwrocGorny_Y() ){
+         return false; }
+      if ( dino.ZwrocGorny_Y() > this.ZwrocDolny_Y() ){
+        return false; }
+    return true; 
+   }
+   UstawGrafikeKaktusa(nazwa_pliku_z_grafika) {
+        this.img = new Image();
+        this.img.src = nazwa_pliku_z_grafika;
+   }
+	UstawKolor(nowy_kolor) {
+		this.kolor = nowy_kolor;
+   }
+	 ZwrocLewy_X()  { 
+      return this.kaktus_x; 
+   }
+   ZwrocPrawy_X() { 
+      return this.kaktus_x + this.kaktus_szerokosc_x;  
+   }
+   ZwrocGorny_Y() { 
+      return this.kaktus_y  
+   }
+   ZwrocDolny_Y() { 
+      return this.kaktus_y + this.kaktus_wysokosc_y;  
+   }
+   UstawPrawy_X(nowy_x) { 
+      this.kaktus_x = nowy_x-this.kaktus_szerokosc_x; 
+   }
+	UstawLosowyPrawy_X(x_drugiego_kaktusa) {
+      let losowy_przedzial;
+      losowy_przedzial = 100 + Math.random() * 400;
+      this.kaktus_x = x_drugiego_kaktusa + losowy_przedzial;
+      if (this.kaktus_x < plansza.width)
+         this.kaktus_x = plansza.width+losowy_przedzial;
+   }
 	
 }
 class klasa_dino
@@ -87,7 +131,7 @@ class klasa_dino
 	}
 	RysujDino()
 	{
-		rysowanie.fillStyle = "#BC06FF";
+		rysowanie.fillStyle = "#FFFFFF";
 		rysowanie.fillRect(this.dino_x, this.dino_y, this.dino_szerokosc_x, this.dino_wysokosc_y);
 		if(this.czy_dino_skacze == true)
 		{
@@ -107,6 +151,18 @@ class klasa_dino
 			this.predkosc = 4;
 		}
 	}
+	ZwrocLewy_X()  { 
+      return this.dino_x; 
+   }
+   ZwrocPrawy_X() { 
+      return this.dino_x + this.dino_szerokosc_x;  
+   }
+   ZwrocGorny_Y() { 
+      return this.dino_y  
+   }
+   ZwrocDolny_Y() { 
+      return this.dino_y + this.dino_wysokosc_y;  
+   }
 }
 
 function RysujPlansze()
@@ -118,28 +174,45 @@ function RysujPlansze()
 <!-- ziemia -->
 function RysujZiemie()
 {
-	rysowanie.fillStyle = "black";
+	rysowanie.fillStyle = "#AE8C3E";
 	rysowanie.fillRect(0,170,plansza.width,5);
 }
 
-function AktualizujWynik()
-{
-	++liczba_klatek;
-	if ((liczba_klatek%10) == 0 )
-	{
-		++wynik_gracz;
-	}
-	document.getElementById("napis_wynik").innerHTML = "Wynik: <strong>" + liczba_klatek + "</strong>";
-	document.getElementById("napis_liczba_zyc").innerHTML = "Skacz dobrze.. <strong>" + liczba_zyc + "</strong>";
-}
+function AktualizujWynik() { 
+   ++liczba_klatek;
+   if ( (liczba_klatek%10) == 0 )
+      ++wynik_gracza;
+   document.getElementById("napis_wynik").innerHTML = 
+   "Wynik: <strong>" + wynik_gracza + "</strong>";
 
-function Gra()
-{
-	RysujPlansze();
-	RysujZiemie();
-	kaktus1.RysujKaktus();
-	dino.RysujDino();
-	AktualizujWynik();
+   if ( (kaktus1.CzyKolizja()==true) ||(kaktus2.CzyKolizja()==true)) {
+      --liczba_zyc;
+      document.getElementById("napis_liczba_zyc").innerHTML 
+      = "Liczba zyc: <strong>" + liczba_zyc + "</strong>";
+      alert("Uncool.");
+      if (liczba_zyc <= 0) {
+         document.getElementById("baner_start").innerHTML = 
+         "<h1>GAME OVER<h/1>";
+         clearInterval(uchwyt_animacji);
+      }
+   }
+   if ( kaktus1.CzyKolizja()==true )   
+      kaktus1.UstawPrawy_X ( dino.ZwrocLewy_X()-1 );
+
+	if ( kaktus2.CzyKolizja()==true )   
+      kaktus2.UstawPrawy_X ( dino.ZwrocLewy_X()-1 );
+}
+function Gra() {
+   RysujPlansze();
+   RysujZiemie();
+   kaktus1.RysujKaktus();
+   if ( kaktus1.kaktus_x < 0 )
+      kaktus1.UstawLosowyPrawy_X( kaktus2.ZwrocLewy_X() ); 
+   kaktus2.RysujKaktus();
+   if ( kaktus2.kaktus_x < 0 )
+      kaktus2.UstawLosowyPrawy_X( kaktus1.ZwrocLewy_X() ); 
+   dino.RysujDino();
+   AktualizujWynik();
 }
 function UstawWcisnietyKlawisz(zdarzenie)
 { 
@@ -149,26 +222,30 @@ function UstawWcisnietyKlawisz(zdarzenie)
 	}
 }
 document.addEventListener("keydown", UstawWcisnietyKlawisz, false);
-let kaktus1, dino;
+
 let liczba_klatek, wynik_gracz, liczba_zyc;
 let uchwyt_animacji;
+let kaktus1, kaktus2, dino;
 
-liczba_klatek = wynik_gracz = 0;
-liczba_zyc = 3;
+
 
 kaktus1 = new klasa_kaktus();
+kaktus2 = new klasa_kaktus();
 dino = new klasa_dino();
 
-function StartGry()
-{
-	document.getElementById("przycisk_start").blur();
-	document.getElementById("baner_start").innerHTML = "<h1> Uwazaj prosze na Dino...</h1>";
-	liczba_klatek = wynik_gracza = 0;
-	liczba_zyc = 3;
-	dino.UstawDino();
-	kaktus1.UstawKaktus();
-	clearInterval(uchwyt_animacji);
-	uchwyt_animacji=setInterval(Gra, 10);
+function StartGry() {
+    document.getElementById("przycisk_start").blur();
+    document.getElementById("baner_start").innerHTML = 
+   "<h1>Uwazaj prosze na Dino....<h/1>";
+   liczba_klatek = wynik_gracza = 0;
+   liczba_zyc = 3; 
+   dino.UstawDino();
+   kaktus1.UstawKaktus();
+    kaktus2.UstawKaktus();
+   kaktus2.UstawLosowyPrawy_X( kaktus1.ZwrocLewy_X() );
+   kaktus2.UstawKolor ( "#F8FF1C" );
+   clearInterval(uchwyt_animacji);
+   uchwyt_animacji = setInterval(Gra, 10);
 }
 </script>
 </body>
