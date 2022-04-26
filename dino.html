@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-Gra Dino v2.4 OKI
+Gra Dino v3.0 OKI
 Kod / omowienie 
 Wersje:
 1.0 - Strona www z tekstem 
@@ -14,18 +14,24 @@ Wersje:
 2.2 - klasa_dino
 2.3 - idzie do gory chlopak 
 2.4 - dino skacze
+3.0 - wynik i liczba zyc 
 -->
 <head>
 </head>
-<body style="background-color: black; color: #AA80FF">
+<body style="background-color: black; color: #FF0000">
 
 <div> <!-- po prostu sekcja tekstu -->
-<strong> Gra dino v2.4 by Bajadera</strong><br>
+<strong> Gra dino v3.0 by Bajadera</strong><br>
 Dino skacze przez pustynie.
 </div>
 
 <canvas id="plansza_canvas" width="600px" height="200px"></canvas>
-
+<div id="napis_wynik">
+Graczu! Niech Dino nie cierpi!
+</div>
+<div id="napis_liczba_zyc">
+Skacz dobrze
+</div>
 <script>
 
 let plansza, rysowanie;
@@ -75,7 +81,7 @@ class klasa_dino
 	}
 	RysujDino()
 	{
-		rysowanie.fillStyle = "#6B89DB";
+		rysowanie.fillStyle = "#BC06FF";
 		rysowanie.fillRect(this.dino_x, this.dino_y, this.dino_szerokosc_x, this.dino_wysokosc_y);
 		if(this.czy_dino_skacze == true)
 		{
@@ -99,7 +105,7 @@ class klasa_dino
 
 function RysujPlansze()
 {
-	rysowanie.fillStyle = "#E8CBF3";
+	rysowanie.fillStyle = "#FF0000";
 	<!--               x y  sz  dl -->
 	rysowanie.fillRect(0,0,plansza.width,plansza.height);
 }
@@ -110,6 +116,14 @@ function RysujZiemie()
 	rysowanie.fillRect(0,170,plansza.width,5);
 }
 
+function AktualizujWynik()
+{
+	++liczba_klatek;
+	if ((liczba_klatek%10) == 0 )
+	++wynik_gracz;
+	document.getElementById("napis_wynik").innerHTML = "Wynik: <strong>" + liczba_klatek + "</strong>";
+	document.getElementById("napis_liczba_zyc").innerHTML = "Skacz dobrze.. <strong>" + liczba_zyc + "</strong>";
+}
 
 function Gra()
 {
@@ -117,6 +131,7 @@ function Gra()
 	RysujZiemie();
 	kaktus1.RysujKaktus();
 	dino.RysujDino();
+	AktualizujWynik();
 }
 function UstawWcisnietyKlawisz(zdarzenie)
 { 
@@ -127,9 +142,20 @@ function UstawWcisnietyKlawisz(zdarzenie)
 }
 document.addEventListener("keydown", UstawWcisnietyKlawisz, false);
 let kaktus1, dino;
+let liczba_klatek, wynik_gracz, liczba_zyc;
+
+liczba_klatek = wynik_gracz = 0;
+liczba_zyc = 3;
+
 kaktus1 = new klasa_kaktus();
 dino = new klasa_dino();
+
 setInterval(Gra, 10); <!-- 100 razy na sekunde-co 10ms -->
 </script>
 </body>
 </html>
+<!-- kolory ktore sa gitem:
+plansza io tekst : #AA80FF
+dino : #BC06FF
+kaktus : #4BC37B 
+--> 
