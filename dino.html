@@ -18,13 +18,14 @@ Wersje:
 3.1 - przycisk start
 3.2 - kolizja
 3.3 - dwoch enemy
+3.4 - obrazki
 -->
 <head>
 </head>
 <body style="background-color: black; color: #FF0000">
 
 <div> <!-- po prostu sekcja tekstu -->
-<strong> Gra dino v3.3 by Bajadera</strong><br>
+<strong> Gra dino v3.4 by Bajadera</strong><br>
 Niech Dino nie cierpi!
 </div>
 <div id="baner_start">
@@ -55,14 +56,14 @@ class klasa_kaktus
 	UstawKaktus()
 	{<!-- ustawia kaktus -->
 		this.kaktus_x = plansza.width + 40; 
-		this.kaktus_y = 150; 
-		this.kaktus_szerokosc_x = 10; 
-		this.kaktus_wysokosc_y = 20; 
+		this.kaktus_y = 120; 
+		this.kaktus_szerokosc_x = 40; 
+		this.kaktus_wysokosc_y = 60; 
 		this.kaktus_predkosc_x = 1;
 		this.kolor = "#0B0B0B";
 		
 	}
-	<!-- ubogi kaktus -->
+	
 	RysujKaktus()
 	{
 	rysowanie.fillStyle = this.kolor;
@@ -148,7 +149,7 @@ class klasa_dino
 		if ( this.czy_dino_skacze == false ) 
 		{
 			this.czy_dino_skacze = true;
-			this.predkosc = 4;
+			this.predkosc = 6;
 		}
 	}
 	ZwrocLewy_X()  { 
@@ -174,7 +175,7 @@ function RysujPlansze()
 <!-- ziemia -->
 function RysujZiemie()
 {
-	rysowanie.fillStyle = "#AE8C3E";
+	rysowanie.fillStyle = "#46156B";
 	rysowanie.fillRect(0,170,plansza.width,5);
 }
 
@@ -241,8 +242,10 @@ function StartGry() {
    liczba_zyc = 3; 
    dino.UstawDino();
    kaktus1.UstawKaktus();
+   kaktus1.UstawGrafikeKaktusa("enemy1.png");
     kaktus2.UstawKaktus();
    kaktus2.UstawLosowyPrawy_X( kaktus1.ZwrocLewy_X() );
+   kaktus2.UstawGrafikeKaktusa("enemy2.png");
    kaktus2.UstawKolor ( "#F8FF1C" );
    clearInterval(uchwyt_animacji);
    uchwyt_animacji = setInterval(Gra, 10);
@@ -251,7 +254,7 @@ function StartGry() {
 </body>
 </html>
 <!-- kolory ktore sa gitem:
-plansza io tekst : #AA80FF
+plansza i tekst : #AA80FF
 dino : #BC06FF
 kaktus : #4BC37B 
 --> 
